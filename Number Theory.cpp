@@ -23,15 +23,16 @@ class numberTheory {
 		
 		/* 
 		 * 
-		 * Assumption. All parameters are <= 10^9. 
+		 * Assumption. All parameters are <= 4*10^18 (unless I wrote otherwise). 
 		 *
 		*/
 		
 		
 		
-		
-		static int GCD(int a, int b){ // one number is positive, another one is non-negative
-			int tmp;
+		// Greatest common divisor (GCD) of a and b.
+		// Assumption: one number (no matter which one) is positive, another one is non-negative.
+		static LL GCD(LL a, LL b){
+			LL tmp;
 			
 			while( b ){
 				tmp = a % b;
@@ -43,7 +44,9 @@ class numberTheory {
 		}
 		
 		
-		static LL multiplyModulo(LL a, LL b, LL m){ // a*b (mod m); a,b >= 0, m > 0
+		// a*b (mod m).
+		// Assumptions: a,b >= 0, m > 0
+		static LL multiplyModulo(LL a, LL b, LL m){
 			
 			a %= m;
 			b %= m;
@@ -64,7 +67,9 @@ class numberTheory {
 		}
 		
 		
-		static LL fastPowerModulo(LL a, LL k, LL m){ // a^k (mod m); k >= 0; a,m > 0
+		// a^k (mod m).
+		// Assumptions: k >= 0, a,m > 0
+		static LL fastPowerModulo(LL a, LL k, LL m){
 			
 			a %= m;
 			
@@ -84,12 +89,16 @@ class numberTheory {
 		}
 		
 		
+		// a^(-1) (mod p).
+		// Assumptions: // a and p are relatively prime, p - prime
 		static LL reverseModuloP(LL a, LL p){ // a and p are relatively prime, p - prime
 			return fastPowerModulo(a, p-2, p);
 		}
 
 
-		static int floorSqrt(int x){ // x >= 0
+		// floor( sqrt(x) ).
+		// Assumption: 10^9 >= x >= 0
+		static int floorSqrt(int x){
 			int start = 0, end = 32000, result, medium;
 			
 			while( start <= end ){
@@ -110,10 +119,10 @@ class numberTheory {
 		}
 		
 		
-		// Miller-Rabin primality test + additional base cases.
-		// 0 <= n <= 9*10^18 - an integer to be checked
-		// k - number of tests (by default, k=50)
-		static bool isPrimeMillerRabin(LL n, int k=50){
+		// Miller-Rabin primality test + additional cases.
+		// 0 <= n <= 4*10^18 - an integer to be checked
+		// numberOfTests - number of tests (by default: numberOfTests = 50)
+		static bool isPrimeMillerRabin(LL n, int numberOfTests=50){
 			
 			/* Additional cases. */
 			
@@ -226,7 +235,7 @@ class numberTheory {
 			}
 			
 			
-			REP(i,1,k){ // for each test
+			REP(i,1,numberOfTests){ // for each test
 				
 				bool isSingleTestResultIsComposite = true;
 				
@@ -263,14 +272,12 @@ class numberTheory {
 
 int main(){
 	
-	numberTheory numTh;
-	
 	int A = numberTheory::GCD(19,551000);
 	int B = numberTheory::fastPowerModulo(2,15,3);
 	int C = numberTheory::reverseModuloP(7,47);
 	int D = numberTheory::floorSqrt(200406070+556778);
 	
-	std::cout << A << std::endl << B << std::endl << C << std::endl << D << std::endl;
+	std::cout << A << std::endl << B << std::endl << C << std::endl << D << std::endl << std::endl;
 	
 	
 	// ----------------
